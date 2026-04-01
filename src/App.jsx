@@ -285,7 +285,6 @@ function App() {
       {/* ── HEADER ── */}
       <header className="fade-up" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
         <div>
-          <p className="section-label" style={{ marginBottom: 6 }}>Overview</p>
           <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: '26px', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
             Finance Dashboard
           </h1>
