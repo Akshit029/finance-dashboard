@@ -39,8 +39,10 @@ export default function DashboardCharts({ transactions }) {
 
   const styles = {
     container: { display: 'flex', gap: '20px', marginBottom: '30px', flexWrap: 'wrap' },
-    chartCard: { flex: '1 1 400px', backgroundColor: 'white', padding: '24px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', height: '350px' },
-    title: { marginBottom: '20px', fontSize: '16px', color: '#444' }
+    // Changed backgroundColor to var(--card-bg)
+    chartCard: { flex: '1 1 400px', backgroundColor: 'var(--card-bg)', padding: '24px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', height: '420px' },
+    // Changed color to var(--text-main)
+    title: { marginBottom: '20px', fontSize: '16px', color: 'var(--text-main)' }
   };
 
   return (
@@ -49,7 +51,7 @@ export default function DashboardCharts({ transactions }) {
       {/* CATEGORICAL VISUALIZATION (Requirement 1b) */}
       <div style={styles.chartCard}>
         <h3 style={styles.title}>Spending by Category</h3>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={320}>
           <PieChart>
             <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
               {pieData.map((entry, index) => (
@@ -65,7 +67,7 @@ export default function DashboardCharts({ transactions }) {
       {/* TIME-BASED VISUALIZATION (Requirement 1a) */}
       <div style={styles.chartCard}>
         <h3 style={styles.title}>Cashflow Trend</h3>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={320}>
           <BarChart data={barData}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="date" />

@@ -16,21 +16,21 @@ export default function TransactionTable({ transactions, role }) {
     return matchesSearch && matchesCategory;
   });
 
-  // Basic inline styles to match your dashboard
+  // --- UPDATED STYLES FOR DARK MODE ---
   const styles = {
-    container: { backgroundColor: 'white', padding: '24px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' },
+    container: { backgroundColor: 'var(--card-bg)', padding: '24px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' },
     controlsHeader: { display: 'flex', justifyContent: 'space-between', marginBottom: '20px', gap: '15px' },
-    input: { padding: '10px', borderRadius: '4px', border: '1px solid #ccc', flex: 1, fontSize: '16px' },
-    select: { padding: '10px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '16px' },
+    input: { padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', flex: 1, fontSize: '16px', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' },
+    select: { padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '16px', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' },
     table: { width: '100%', borderCollapse: 'collapse', textAlign: 'left' },
-    th: { borderBottom: '2px solid #eee', padding: '12px', color: '#666', fontWeight: 'bold' },
-    td: { borderBottom: '1px solid #eee', padding: '12px' },
+    th: { borderBottom: '2px solid var(--border-color)', padding: '12px', color: 'var(--text-muted)', fontWeight: 'bold' },
+    td: { borderBottom: '1px solid var(--border-color)', padding: '12px', color: 'var(--text-main)' },
     deleteBtn: { padding: '6px 12px', backgroundColor: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '4px', cursor: 'pointer' }
   };
 
   return (
     <div style={styles.container}>
-      <h3 style={{ marginBottom: '20px' }}>Recent Transactions</h3>
+      <h3 style={{ marginBottom: '20px', color: 'var(--text-main)' }}>Recent Transactions</h3>
 
       {/* FILTER CONTROLS */}
       <div style={styles.controlsHeader}>
@@ -71,11 +71,20 @@ export default function TransactionTable({ transactions, role }) {
                 <td style={styles.td}>{txn.date}</td>
                 <td style={styles.td}>{txn.description}</td>
                 <td style={styles.td}>
-                  <span style={{ backgroundColor: '#f3f4f6', padding: '4px 8px', borderRadius: '12px', fontSize: '14px' }}>
+                  {/* FIX 1: Category Badges now use CSS variables */}
+                  <span style={{ 
+                    backgroundColor: 'var(--bg-color)', 
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--text-main)',
+                    padding: '4px 8px', 
+                    borderRadius: '12px', 
+                    fontSize: '14px' 
+                  }}>
                     {txn.category}
                   </span>
                 </td>
-                <td style={{ ...styles.td, color: txn.type === 'income' ? '#16a34a' : '#111', fontWeight: 'bold' }}>
+                {/* FIX 2: Expense amounts use var(--text-main) instead of #111 */}
+                <td style={{ ...styles.td, color: txn.type === 'income' ? '#16a34a' : 'var(--text-main)', fontWeight: 'bold' }}>
                   {txn.type === 'income' ? '+' : '-'}${txn.amount.toFixed(2)}
                 </td>
                 {/* Conditional Action Button for Admin Role */}
@@ -90,7 +99,8 @@ export default function TransactionTable({ transactions, role }) {
             ))
           ) : (
             <tr>
-              <td colSpan={role === 'admin' ? 5 : 4} style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+              {/* FIX 3: Empty search text uses var(--text-muted) instead of #666 */}
+              <td colSpan={role === 'admin' ? 5 : 4} style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)' }}>
                 No transactions found.
               </td>
             </tr>

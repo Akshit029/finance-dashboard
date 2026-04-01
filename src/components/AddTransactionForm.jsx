@@ -42,7 +42,7 @@ export default function AddTransactionForm({ onAdd }) {
   };
 
   const styles = {
-    container: { backgroundColor: '#f8fafc', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '20px' },
+    container: { backgroundColor: 'var(--card-bg)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-color)', marginBottom: '20px' },
     formGroup: { display: 'flex', gap: '15px', marginBottom: '15px', flexWrap: 'wrap' },
     input: { padding: '10px', borderRadius: '4px', border: '1px solid #ccc', flex: 1, minWidth: '150px' },
     button: { padding: '10px 20px', backgroundColor: '#0ea5e9', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }
