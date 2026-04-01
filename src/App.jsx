@@ -89,6 +89,10 @@ const globalStyles = `
     0%, 100% { transform: scale(1); opacity: 1; }
     50%       { transform: scale(1.4); opacity: 0.7; }
   }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
 
   .fade-up   { animation: fadeUp 0.5s ease both; }
   .fade-up-1 { animation-delay: 0.08s; }
@@ -150,69 +154,29 @@ const globalStyles = `
   .stat-card.balance::before { background: linear-gradient(90deg, var(--accent), #e8c98e); }
   .stat-card.income::before  { background: linear-gradient(90deg, var(--income), #52c97a); }
   .stat-card.expense::before { background: linear-gradient(90deg, var(--expense), #e87b70); }
-
-  .stat-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 14px;
-  }
-  .stat-card-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-  .stat-card-icon {
-    width: 34px; height: 34px;
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; flex-shrink: 0;
-  }
-  .stat-card-value {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
+  .stat-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .stat-card-label  { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); }
+  .stat-card-icon   { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .stat-card-value  { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
 
   /* ── Toggle button ── */
   .toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 16px;
-    border-radius: 99px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px; border-radius: 99px;
     border: 1.5px solid var(--card-border);
-    background: var(--card-bg);
-    color: var(--text-main);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: var(--shadow-sm);
-    white-space: nowrap;
+    background: var(--card-bg); color: var(--text-main);
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: var(--transition);
+    box-shadow: var(--shadow-sm); white-space: nowrap;
   }
-  .toggle-btn:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-    transform: translateY(-1px);
-  }
+  .toggle-btn:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); transform: translateY(-1px); }
 
   /* ── Role badge ── */
   .role-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 13px;
-    border-radius: 99px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 13px; border-radius: 99px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; white-space: nowrap;
   }
   .role-badge.admin  { background: var(--accent-soft); color: var(--accent); border: 1.5px solid rgba(200,169,110,0.25); }
   .role-badge.viewer { background: var(--bg-secondary); color: var(--text-label); border: 1.5px solid var(--card-border); }
@@ -224,85 +188,74 @@ const globalStyles = `
     border: 1.5px solid rgba(29,95,166,0.15);
     border-radius: var(--radius-sm);
     padding: 13px 18px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--info);
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: var(--info);
     margin-bottom: 28px;
   }
   [data-theme="dark"] .insight-banner { border-color: rgba(91,155,213,0.2); }
   .insight-banner .ibn-icon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
 
+  /* ── Toast notification ── */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 18px;
+    box-shadow: var(--shadow-lg);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-main);
+    display: flex; align-items: center; gap: 8px;
+    animation: slideIn 0.25s ease both;
+    z-index: 10000;
+    max-width: 300px;
+  }
+  .toast-icon { font-size: 16px; flex-shrink: 0; }
+
   /* ── Section label ── */
   .section-label {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 14px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 14px;
   }
 
   /* ── Separator ── */
   .separator { border: none; border-top: 1px solid var(--card-border); margin: 32px 0; }
 
   /* ════════════════════════════════════
-     RESPONSIVE BREAKPOINTS
+     RESPONSIVE
   ════════════════════════════════════ */
-
-  /* Tablet – 768px */
   @media (max-width: 768px) {
     .dash-wrapper  { padding: 20px 16px 48px; }
-
-    .dash-header {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 24px;
-      gap: 12px;
-    }
+    .dash-header   { flex-direction: column; align-items: flex-start; margin-bottom: 24px; gap: 12px; }
     .dash-header-controls { width: 100%; flex-wrap: wrap; }
-
-    .dash-title { font-size: 22px; }
-
-    /* 2-col grid, balance full-width */
-    .stat-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .dash-title    { font-size: 22px; }
+    .stat-grid     { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .stat-grid > :first-child { grid-column: 1 / -1; }
-
-    .stat-card { padding: 20px 18px 16px; }
+    .stat-card     { padding: 20px 18px 16px; }
     .stat-card-value { font-size: 24px; }
-
     .insight-banner { font-size: 13px; padding: 12px 14px; }
-    .separator { margin: 22px 0; }
+    .separator     { margin: 22px 0; }
+    .toast         { bottom: 16px; right: 16px; left: 16px; max-width: none; }
   }
-
-  /* Mobile – 480px */
   @media (max-width: 480px) {
-    .dash-wrapper { padding: 14px 12px 36px; }
-
-    .dash-header { gap: 10px; margin-bottom: 18px; }
-    .dash-title  { font-size: 19px; }
-
-    .toggle-btn  { padding: 8px 12px; font-size: 12px; gap: 5px; }
-    .role-badge  { padding: 6px 10px; font-size: 10px; }
-
-    /* 1-col stack */
-    .stat-grid { grid-template-columns: 1fr; gap: 10px; }
+    .dash-wrapper  { padding: 14px 12px 36px; }
+    .dash-header   { gap: 10px; margin-bottom: 18px; }
+    .dash-title    { font-size: 19px; }
+    .toggle-btn    { padding: 8px 12px; font-size: 12px; gap: 5px; }
+    .role-badge    { padding: 6px 10px; font-size: 10px; }
+    .stat-grid     { grid-template-columns: 1fr; gap: 10px; }
     .stat-grid > :first-child { grid-column: auto; }
-
-    .stat-card { padding: 18px 16px 14px; }
+    .stat-card     { padding: 18px 16px 14px; }
     .stat-card-value { font-size: 26px; }
-
     .insight-banner { font-size: 12px; padding: 11px 13px; }
-    .separator { margin: 18px 0; }
+    .separator     { margin: 18px 0; }
     .section-label { font-size: 10px; }
   }
-
-  /* Very small – 360px */
   @media (max-width: 360px) {
-    .dash-title { font-size: 17px; }
-    .toggle-btn { padding: 7px 10px; font-size: 11px; }
+    .dash-title    { font-size: 17px; }
+    .toggle-btn    { padding: 7px 10px; font-size: 11px; }
     .stat-card-value { font-size: 22px; }
   }
 `;
@@ -332,6 +285,16 @@ function StatCard({ label, value, type, icon, prefix = '', color }) {
   );
 }
 
+/* ─── TOAST ──────────────────────────────────────────────────────────────────── */
+function Toast({ message, icon }) {
+  return (
+    <div className="toast">
+      <span className="toast-icon">{icon}</span>
+      {message}
+    </div>
+  );
+}
+
 /* ─── APP ───────────────────────────────────────────────────────────────────── */
 function App() {
   injectStyles();
@@ -339,12 +302,31 @@ function App() {
   const [transactions, setTransactions] = useState(initialTransactions);
   const [role, setRole]                 = useState('viewer');
   const [isDarkMode, setIsDarkMode]     = useState(false);
+  const [toast, setToast]               = useState(null);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  const handleAddTransaction = (newTxn) => setTransactions([newTxn, ...transactions]);
+  // Auto-dismiss toast after 3 s
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 3000);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  const showToast = (message, icon = '✅') => setToast({ message, icon });
+
+  const handleAddTransaction = (newTxn) => {
+    setTransactions(prev => [newTxn, ...prev]);
+    showToast(`"${newTxn.description}" added`, '✅');
+  };
+
+  const handleDeleteTransaction = (id) => {
+    const txn = transactions.find(t => t.id === id);
+    setTransactions(prev => prev.filter(t => t.id !== id));
+    if (txn) showToast(`"${txn.description}" deleted`, '🗑');
+  };
 
   const totalIncome   = transactions.filter(t => t.type === 'income').reduce((a, c) => a + c.amount, 0);
   const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((a, c) => a + c.amount, 0);
@@ -420,7 +402,11 @@ function App() {
       {/* ── TRANSACTION TABLE ── */}
       <div className="fade-up fade-up-5">
         <p className="section-label">Transaction History</p>
-        <TransactionTable transactions={transactions} role={role} />
+        <TransactionTable
+          transactions={transactions}
+          role={role}
+          onDelete={handleDeleteTransaction}
+        />
       </div>
 
       <hr className="separator" />
@@ -430,6 +416,9 @@ function App() {
         <p className="section-label">Visualizations</p>
         <DashboardCharts transactions={transactions} />
       </div>
+
+      {/* ── TOAST ── */}
+      {toast && <Toast message={toast.message} icon={toast.icon} />}
 
     </div>
   );
