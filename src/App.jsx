@@ -67,7 +67,6 @@ const globalStyles = `
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* ── Noise grain overlay ── */
   body::before {
     content: '';
     position: fixed;
@@ -78,63 +77,112 @@ const globalStyles = `
     opacity: 0.4;
   }
 
-  /* ── Scrollbar ── */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
 
-  /* ── Animations ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes shimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position:  200% center; }
   }
   @keyframes pulse-dot {
     0%, 100% { transform: scale(1); opacity: 1; }
     50%       { transform: scale(1.4); opacity: 0.7; }
   }
 
-  .fade-up { animation: fadeUp 0.5s ease both; }
+  .fade-up   { animation: fadeUp 0.5s ease both; }
   .fade-up-1 { animation-delay: 0.08s; }
   .fade-up-2 { animation-delay: 0.16s; }
   .fade-up-3 { animation-delay: 0.24s; }
   .fade-up-4 { animation-delay: 0.32s; }
   .fade-up-5 { animation-delay: 0.40s; }
 
-  /* ── Cards ── */
+  /* ── Page wrapper ── */
+  .dash-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ── Header ── */
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 16px;
+  }
+  .dash-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+  }
+  .dash-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ── Stat grid ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  /* ── Stat card ── */
   .stat-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
-    padding: 28px 28px 24px;
+    padding: 26px 24px 20px;
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     position: relative;
     overflow: hidden;
   }
-  .stat-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-  .stat-card.balance::before  { background: linear-gradient(90deg, var(--accent), #e8c98e); }
-  .stat-card.income::before   { background: linear-gradient(90deg, var(--income), #52c97a); }
-  .stat-card.expense::before  { background: linear-gradient(90deg, var(--expense), #e87b70); }
+  .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .stat-card.balance::before { background: linear-gradient(90deg, var(--accent), #e8c98e); }
+  .stat-card.income::before  { background: linear-gradient(90deg, var(--income), #52c97a); }
+  .stat-card.expense::before { background: linear-gradient(90deg, var(--expense), #e87b70); }
 
-  /* ── Toggle Button ── */
+  .stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .stat-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .stat-card-icon {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .stat-card-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Toggle button ── */
   .toggle-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 9px 18px;
+    gap: 6px;
+    padding: 9px 16px;
     border-radius: 99px;
     border: 1.5px solid var(--card-border);
     background: var(--card-bg);
@@ -145,7 +193,7 @@ const globalStyles = `
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
-    letter-spacing: 0.01em;
+    white-space: nowrap;
   }
   .toggle-btn:hover {
     border-color: var(--accent);
@@ -153,56 +201,40 @@ const globalStyles = `
     transform: translateY(-1px);
   }
 
-  /* ── Admin badge ── */
+  /* ── Role badge ── */
   .role-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 7px 13px;
     border-radius: 99px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
+    white-space: nowrap;
   }
-  .role-badge.admin {
-    background: var(--accent-soft);
-    color: var(--accent);
-    border: 1.5px solid rgba(200,169,110,0.25);
-  }
-  .role-badge.viewer {
-    background: var(--bg-secondary);
-    color: var(--text-label);
-    border: 1.5px solid var(--card-border);
-  }
-  .role-badge .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
+  .role-badge.admin  { background: var(--accent-soft); color: var(--accent); border: 1.5px solid rgba(200,169,110,0.25); }
+  .role-badge.viewer { background: var(--bg-secondary); color: var(--text-label); border: 1.5px solid var(--card-border); }
+  .role-badge .dot   { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: pulse-dot 2s ease-in-out infinite; }
 
   /* ── Insight banner ── */
   .insight-banner {
     background: var(--info-soft);
     border: 1.5px solid rgba(29,95,166,0.15);
     border-radius: var(--radius-sm);
-    padding: 14px 20px;
+    padding: 13px 18px;
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 10px;
     font-size: 14px;
     color: var(--info);
+    margin-bottom: 28px;
   }
-  [data-theme="dark"] .insight-banner {
-    border-color: rgba(91,155,213,0.2);
-  }
-  .insight-banner .icon {
-    font-size: 18px;
-    flex-shrink: 0;
-  }
+  [data-theme="dark"] .insight-banner { border-color: rgba(91,155,213,0.2); }
+  .insight-banner .ibn-icon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
 
-  /* ── Section divider ── */
+  /* ── Section label ── */
   .section-label {
     font-family: 'Syne', sans-serif;
     font-size: 11px;
@@ -213,15 +245,68 @@ const globalStyles = `
     margin-bottom: 14px;
   }
 
-  /* ── Separator line ── */
-  .separator {
-    border: none;
-    border-top: 1px solid var(--card-border);
-    margin: 32px 0;
+  /* ── Separator ── */
+  .separator { border: none; border-top: 1px solid var(--card-border); margin: 32px 0; }
+
+  /* ════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ════════════════════════════════════ */
+
+  /* Tablet – 768px */
+  @media (max-width: 768px) {
+    .dash-wrapper  { padding: 20px 16px 48px; }
+
+    .dash-header {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+    .dash-header-controls { width: 100%; flex-wrap: wrap; }
+
+    .dash-title { font-size: 22px; }
+
+    /* 2-col grid, balance full-width */
+    .stat-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .stat-grid > :first-child { grid-column: 1 / -1; }
+
+    .stat-card { padding: 20px 18px 16px; }
+    .stat-card-value { font-size: 24px; }
+
+    .insight-banner { font-size: 13px; padding: 12px 14px; }
+    .separator { margin: 22px 0; }
+  }
+
+  /* Mobile – 480px */
+  @media (max-width: 480px) {
+    .dash-wrapper { padding: 14px 12px 36px; }
+
+    .dash-header { gap: 10px; margin-bottom: 18px; }
+    .dash-title  { font-size: 19px; }
+
+    .toggle-btn  { padding: 8px 12px; font-size: 12px; gap: 5px; }
+    .role-badge  { padding: 6px 10px; font-size: 10px; }
+
+    /* 1-col stack */
+    .stat-grid { grid-template-columns: 1fr; gap: 10px; }
+    .stat-grid > :first-child { grid-column: auto; }
+
+    .stat-card { padding: 18px 16px 14px; }
+    .stat-card-value { font-size: 26px; }
+
+    .insight-banner { font-size: 12px; padding: 11px 13px; }
+    .separator { margin: 18px 0; }
+    .section-label { font-size: 10px; }
+  }
+
+  /* Very small – 360px */
+  @media (max-width: 360px) {
+    .dash-title { font-size: 17px; }
+    .toggle-btn { padding: 7px 10px; font-size: 11px; }
+    .stat-card-value { font-size: 22px; }
   }
 `;
 
-/* ─── INJECT STYLES ─────────────────────────────────────────────────────────── */
 function injectStyles() {
   if (!document.getElementById('finance-dashboard-styles')) {
     const tag = document.createElement('style');
@@ -233,22 +318,14 @@ function injectStyles() {
 
 /* ─── STAT CARD ─────────────────────────────────────────────────────────────── */
 function StatCard({ label, value, type, icon, prefix = '', color }) {
+  const iconBg = type === 'balance' ? 'var(--accent-soft)' : type === 'income' ? 'var(--income-soft)' : 'var(--expense-soft)';
   return (
     <div className={`stat-card ${type}`}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-        <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-          {label}
-        </span>
-        <span style={{
-          width: 36, height: 36, borderRadius: 10,
-          background: type === 'balance' ? 'var(--accent-soft)' : type === 'income' ? 'var(--income-soft)' : 'var(--expense-soft)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 16
-        }}>
-          {icon}
-        </span>
+      <div className="stat-card-header">
+        <span className="stat-card-label">{label}</span>
+        <span className="stat-card-icon" style={{ background: iconBg }}>{icon}</span>
       </div>
-      <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '30px', fontWeight: 700, color: color || 'var(--text-main)', letterSpacing: '-0.02em' }}>
+      <div className="stat-card-value" style={{ color: color || 'var(--text-main)' }}>
         {prefix}{Math.abs(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </div>
     </div>
@@ -260,63 +337,51 @@ function App() {
   injectStyles();
 
   const [transactions, setTransactions] = useState(initialTransactions);
-  const [role, setRole] = useState('viewer');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [role, setRole]                 = useState('viewer');
+  const [isDarkMode, setIsDarkMode]     = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  const handleAddTransaction = (newTxn) => {
-    setTransactions([newTxn, ...transactions]);
-  };
+  const handleAddTransaction = (newTxn) => setTransactions([newTxn, ...transactions]);
 
-  const totalIncome    = transactions.filter(t => t.type === 'income').reduce((a, c) => a + c.amount, 0);
-  const totalExpenses  = transactions.filter(t => t.type === 'expense').reduce((a, c) => a + c.amount, 0);
-  const totalBalance   = totalIncome - totalExpenses;
+  const totalIncome   = transactions.filter(t => t.type === 'income').reduce((a, c) => a + c.amount, 0);
+  const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((a, c) => a + c.amount, 0);
+  const totalBalance  = totalIncome - totalExpenses;
 
   const highestExpense = transactions
     .filter(t => t.type === 'expense')
     .reduce((max, cur) => cur.amount > max.amount ? cur : max, { amount: 0, category: 'None' });
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 64px' }}>
+    <div className="dash-wrapper">
 
       {/* ── HEADER ── */}
-      <header className="fade-up" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+      <header className="dash-header fade-up">
         <div>
-          <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: '26px', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-            Finance Dashboard
-          </h1>
+          <p className="section-label" style={{ marginBottom: 5 }}>Overview</p>
+          <h1 className="dash-title">Finance Dashboard</h1>
         </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {/* Dark mode */}
+        <div className="dash-header-controls">
           <button className="toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)}>
             {isDarkMode ? '☀️ Light' : '🌙 Dark'}
           </button>
-
-          {/* Role badge */}
           <div className={`role-badge ${role}`}>
             <span className="dot" />
             {role.toUpperCase()}
           </div>
-
-          {/* Role switch */}
           <button className="toggle-btn" onClick={() => setRole(role === 'viewer' ? 'admin' : 'viewer')}>
-            {role === 'viewer' ? '🔑 Go Admin' : '👁 Go Viewer'}
+            {role === 'viewer' ? '🔑 Go Admin' : '👁 Viewer'}
           </button>
         </div>
       </header>
 
       {/* ── STAT CARDS ── */}
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+      <section className="stat-grid">
         <div className="fade-up fade-up-1">
           <StatCard
-            label="Total Balance"
-            value={totalBalance}
-            type="balance"
-            icon="⚖️"
+            label="Total Balance" value={totalBalance} type="balance" icon="⚖️"
             prefix={totalBalance >= 0 ? '$' : '-$'}
             color={totalBalance >= 0 ? 'var(--text-main)' : 'var(--expense)'}
           />
@@ -330,13 +395,15 @@ function App() {
       </section>
 
       {/* ── INSIGHT BANNER ── */}
-      <div className="insight-banner fade-up fade-up-4" style={{ marginBottom: '28px' }}>
-        <span className="icon">💡</span>
+      <div className="insight-banner fade-up fade-up-4">
+        <span className="ibn-icon">💡</span>
         <span>
           Your highest spending category is{' '}
           <strong style={{ fontWeight: 600 }}>{highestExpense.category}</strong>
           {' '}at{' '}
-          <strong style={{ fontWeight: 600 }}>${highestExpense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>
+          <strong style={{ fontWeight: 600 }}>
+            ${highestExpense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+          </strong>
         </span>
       </div>
 
